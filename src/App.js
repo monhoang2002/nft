@@ -1,25 +1,44 @@
-import logo from './logo.svg';
-import './App.css';
+// App.js
+import React from "react";
+import 'bootstrap/dist/css/bootstrap.min.css';
+import { Navbar, Nav, Button } from "react-bootstrap";
+import CreateNFT from "./createnft";
 
-function App() {
+const App = () => {
+
+  const connectWallet = async () => {
+    try {
+      if (!window.solana || !window.solana.isPhantom) {
+        alert("Vi Phantom chua co tai ne tai di ban !");
+        return;
+      }
+      const connected = await window.solana.connect();
+      if (connected) {
+        alert("da ket noi thanh cong!");
+      }
+    } catch (error) {
+      console.error("ket noi k dc roi !");
+    }
+  }
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div>
+      <Navbar bg='dark' variant="dark">
+        <Navbar.Brand>
+          NFT APP
+        </Navbar.Brand>
+        <Nav>
+          <Nav.Link>About Us</Nav.Link>
+          <Nav.Link>Blogs</Nav.Link>
+          <Nav.Link>Market Place</Nav.Link>
+        </Nav>
+        <Button onClick={connectWallet} variant="outline-success">Connect Wallet</Button>
+      </Navbar>
+      <main>
+        <CreateNFT />
+      </main>
     </div>
   );
-}
+};
 
 export default App;
